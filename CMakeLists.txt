@@ -48,3 +48,4 @@ add_executable(eigen_row_col_marjor_efficiency eigen_row_col_marjor_efficiency.c
 add_executable(cv_mat_block cv_mat_block.cpp)
 add_executable(optimization_essential_matrix optimization_essential_matrix.cpp)
 add_executable(inverse_depth_calculate inverse_depth_calculate.cpp)
+add_executable(img_pca img_pca.cpp)
