@@ -7,15 +7,23 @@ int main(int argc, char** argv) {
     if (argc > 1) {
         ratio = atof(argv[1]);
     }
-    const Eigen::Vector3d true_x(10, 31, 7.01);
+    const Eigen::Vector3d true_x(0.10, 0.31, 7.01);
     Eigen::Matrix3d H;
     H << 42.9978, -0.263839, -12.3629, -0.263839, 43.7347, 39.1302, -12.3629,
         39.1302, 38.4308;
     const Eigen::Vector3d true_b = H * true_x;
 
-    const Eigen::Vector3d noise_x(1.0, 1.0, 0.5);
+    const Eigen::Vector3d delta_x(10.0, 10.0, 20.5);
+    const Eigen::Vector3d delta_b =
+        H *
+        delta_x;  // 这种噪声会均匀分布在H良好的方向上，所以不会引起解误差变大
+    Info << "delta_b: " << delta_b.transpose();
 
-    const Eigen::Vector3d noise_b = true_b + H * noise_x;
+    const Eigen::Vector3d noise_b =
+        true_b + delta_b + Eigen::Vector3d(0, 0, 0.01);
+    // const Eigen::Vector3d noise_b = true_b + Eigen::Vector3d(0, 0, 0.01);
+    // const Eigen::Vector3d noise_b =
+    //     true_b + Eigen::Vector3d(36.5525, 63.036, 45.9827);
 
     const Eigen::Matrix3d inv_H = H.inverse();
     Info << "H:\n" << H;
@@ -50,6 +58,7 @@ int main(int argc, char** argv) {
          << "\nest_x_from_pseudoInvH: " << est_x_from_pseudoInvH.transpose();
     const Eigen::Vector3d dx1 = true_x - est_x_from_invH;
     const Eigen::Vector3d dx2 = true_x - est_x_from_pseudoInvH;
-    Info << "error1: " << dx1.norm() << ", error2: " << dx2.norm();
+    Info << "x_error1: " << dx1.norm() << ", x_error2: " << dx2.norm();
+    Info << "b_error1: " << (H*dx1).norm() << ", b_error2: " << (H*dx2).norm();
     return 0;
 }
