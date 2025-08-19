@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.10)
 project(edge_slam)
 
 if (NOT CMAKE_CXX_STANDARD)
-  set(CMAKE_CXX_STANDARD 14)
+  set(CMAKE_CXX_STANDARD 17)
 endif ()
 
 if (CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
@@ -41,6 +41,7 @@ include_directories(
 link_libraries(
   ${OpenCV_LIBS}
   ${EIGEN3_LIBS}
+  -lfmt
 )
 
 # 添加可执行文件
@@ -49,3 +50,11 @@ add_executable(cv_mat_block cv_mat_block.cpp)
 add_executable(optimization_essential_matrix optimization_essential_matrix.cpp)
 add_executable(inverse_depth_calculate inverse_depth_calculate.cpp)
 add_executable(img_pca img_pca.cpp)
+add_executable(binocular_half_rotation binocular_half_rotation.cpp)
+add_executable(analysis_triangulate_A_matrix analysis_triangulate_A_matrix.cpp)
+add_executable(edge_check_ut edge_check_ut.cpp)
+add_executable(gpu_video_writer gpu_video_writer.cpp)
+add_executable(test_cv_cuda test_cv_cuda.cpp)
+add_executable(test_perf_create_and_delete_dir test_perf_create_and_delete_dir.cpp)
+add_executable(eigen_parellel_error eigen_parellel_error.cpp)
+add_executable(svd_singular_matrix svd_singular_matrix.cpp)

@@ -1,6 +1,6 @@
 #include <chrono>
 #include <iostream>
-#include <unistd.h>
+#include <random>
 
 #include <opencv2/opencv.hpp>
 
@@ -11,6 +11,17 @@ constexpr double kDeg2Rad = M_PI / 180;
 
 constexpr int kImgWidth = 640;
 constexpr int kImgHeight = 480;
+
+struct Log {
+    template <typename T>
+    Log& operator<<(const T& value) {
+        std::cout << value;
+        return *this;  // 实现禁止输出相关log
+    }
+    ~Log() { std::cout << std::endl; }
+};
+
+#define Info Log()
 
 // 行优先存入
 // clang-format off

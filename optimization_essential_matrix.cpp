@@ -20,6 +20,28 @@ int main() {
 
     cout << "[R*t]x:\n" << SkewSymmetric(R * t) << endl;
     cout << "R*[t]x:\n" << R * SkewSymmetric(t) << endl;
+    
+    // vector<int> a = {1, 2};
+    // vector<reference_wrapper<vector<int>> >b(1);
+    // b[0] = a;
+    // a.push_back(3);
+    // for(const int n : b[0].get()) {
+    //     cout << n << " ";
+    // }
+    // cout << endl;
+    cout << ceil(double(2)/3) << endl;
 
+    Eigen::Matrix3d testArray = Eigen::Matrix3d::Identity();
+    testArray.diagonal() << 4, 9, 16;
+    cout << testArray.diagonal().array().sqrt().transpose() << endl; // 2, 3, 4
+
+    set<int> updateId = {-1, 3, 4};
+    updateId.erase(3);
+    updateId.erase(5);
+    cout << "update id:";
+    for(const int& id : updateId) {
+        cout << " " << id;
+    }
+    cout << endl;
     return 0;
 }
